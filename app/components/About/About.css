@@ -1,0 +1,31 @@
+.about {
+  background-color: #0c0c0e;
+}
+
+.about-content {
+  display: flex;
+  justify-content: center;
+}
+
+.about-text {
+  max-width: 750px;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  text-align: center;
+}
+
+.about-text p {
+  margin-bottom: 1.5rem;
+}
+
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .about-text {
+    font-size: 1rem;
+    text-align: left;
+  }
+}

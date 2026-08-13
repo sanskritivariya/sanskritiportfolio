@@ -1,0 +1,366 @@
+/* Main Layout Grid */
+.education-main {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.education-header-section {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.badge-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  margin-bottom: 24px;
+}
+
+.badge-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  animation: pulse-glow 1.5s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(124, 58, 237, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+}
+
+.badge-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.education-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.education-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* Stats Cards styling */
+.education-stats-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 64px;
+}
+
+.stat-glass-card {
+  background: rgba(23, 23, 23, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.stat-glass-card:hover {
+  border-color: rgba(208, 188, 255, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.2);
+}
+
+.stat-accent-pattern {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 128px;
+  height: 128px;
+  border-bottom-left-radius: 100%;
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.accent-primary { background-color: rgba(124, 58, 237, 0.04); }
+.accent-secondary { background-color: rgba(76, 215, 246, 0.04); }
+.accent-tertiary { background-color: rgba(255, 184, 105, 0.04); }
+
+.stat-glass-card:hover .stat-accent-pattern {
+  transform: scale(1.15);
+}
+
+.stat-value {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-glass-card:nth-child(2) .stat-value { color: #4cd7f6; }
+.stat-glass-card:nth-child(3) .stat-value { color: var(--foreground); }
+
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Timeline Layout styling */
+.timeline-section {
+  position: relative;
+  padding: 32px 0;
+}
+
+.timeline-center-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(208, 188, 255, 0.1), var(--accent), rgba(208, 188, 255, 0.1));
+  box-shadow: 0 0 15px rgba(208, 188, 255, 0.4);
+  transform: translateX(-50%);
+}
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  position: relative;
+}
+
+.timeline-milestone {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.milestone-meta {
+  width: 50%;
+  padding: 0 48px;
+}
+
+.milestone-left .milestone-meta {
+  text-align: right;
+}
+
+.milestone-right .milestone-meta {
+  text-align: left;
+  order: 2;
+}
+
+.level-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-primary { color: var(--accent); }
+.badge-secondary { color: #4cd7f6; }
+
+.milestone-degree {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--foreground);
+}
+
+.milestone-school {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.milestone-academic-detail {
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.milestone-right .milestone-academic-detail {
+  color: #4cd7f6;
+}
+
+.timeline-node {
+  position: absolute;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: #0A0A0A;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.node-primary {
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 15px rgba(208, 188, 255, 0.4);
+}
+
+.node-secondary {
+  border: 2px solid #4cd7f6;
+  box-shadow: 0 0 15px rgba(76, 215, 246, 0.3);
+}
+
+.timeline-icon {
+  font-size: 1.15rem;
+}
+
+.node-primary .timeline-icon { color: var(--accent); }
+.node-secondary .timeline-icon { color: #4cd7f6; }
+
+.milestone-content {
+  width: 50%;
+  padding: 0 48px;
+}
+
+.milestone-right .milestone-content {
+  order: 1;
+}
+
+.glass-detail-card {
+  background: rgba(23, 23, 23, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.glass-detail-card:hover {
+  border-color: rgba(208, 188, 255, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.15);
+}
+
+.detail-corner-pattern {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 96px;
+  height: 96px;
+  background-color: rgba(255, 255, 255, 0.015);
+  border-bottom-left-radius: 100%;
+}
+
+.school-image-container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: #131313;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.school-image {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.glass-detail-card:hover .school-image {
+  transform: scale(1.05);
+}
+
+.detail-description {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Scroll Animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+
+/* Responsive break-points mapping to mobile view */
+@media (max-width: 768px) {
+  .education-main {
+    padding: 100px 16px 60px;
+  }
+  .education-title {
+    font-size: 2.5rem;
+  }
+  .education-stats-section {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .stat-glass-card {
+    padding: 24px;
+  }
+  
+  .timeline-center-line {
+    left: 20px;
+    transform: none;
+  }
+  .timeline-milestone {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .milestone-meta {
+    width: 100%;
+    padding: 0 0 0 48px !important;
+    text-align: left !important;
+    order: 1 !important;
+  }
+  .timeline-node {
+    left: 20px;
+    transform: translateX(-50%);
+    top: 16px;
+  }
+  .milestone-content {
+    width: 100%;
+    padding: 0 0 0 48px !important;
+    order: 2 !important;
+  }
+}
