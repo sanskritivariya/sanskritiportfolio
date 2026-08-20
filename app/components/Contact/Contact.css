@@ -72,6 +72,18 @@
   margin-bottom: 24px;
 }
 
+.form-success-alert a {
+  text-decoration: underline;
+  font-weight: 600;
+  color: inherit;
+  margin-left: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.form-success-alert a:hover {
+  opacity: 0.8;
+}
+
 .contact-form {
   display: flex;
   flex-direction: column;

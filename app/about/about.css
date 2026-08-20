@@ -260,23 +260,35 @@
 
 @media (max-width: 768px) {
   .about-main {
-    padding: 100px 16px 60px;
+    padding: 90px 16px 40px;
   }
   .about-title {
     font-size: 2.5rem;
   }
   .about-metrics-section {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 48px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
   }
   .metric-glass-card {
-    padding: 24px;
+    padding: 16px 6px;
+    border-radius: 8px;
+  }
+  .metric-value {
+    font-size: 2rem;
+    margin-bottom: 4px;
+  }
+  .metric-label {
+    font-size: 0.65rem;
+    line-height: 1.25;
   }
 }
 
 @media (max-width: 576px) {
   .about-title {
     font-size: 2rem;
+  }
+  .about-subtitle {
+    font-size: 1rem;
   }
 }

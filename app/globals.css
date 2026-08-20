@@ -22,11 +22,12 @@
 
 html {
   scroll-behavior: smooth;
-  height: 100%;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
-  min-height: 100%;
+  min-height: 100vh;
   background-color: #0A0A0A;
   background-image: 
       linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),

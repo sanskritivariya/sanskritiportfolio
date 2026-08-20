@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import personal from "../../../data/personal";
@@ -10,6 +10,38 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const shouldRestoreScroll = useRef(true);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflowY = "scroll";
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflowY = "";
+      
+      // Only restore scroll position if the user closed the menu without clicking a link
+      if (shouldRestoreScroll.current) {
+        if (scrollY) {
+          window.scrollTo(0, parseInt(scrollY || "0") * -1);
+        }
+      }
+      // Reset the flag for the next time the menu opens
+      shouldRestoreScroll.current = true;
+    }
+    return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflowY = "";
+    };
+  }, [isMenuOpen]);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -17,6 +49,11 @@ export default function Header() {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleNavLinkClick = () => {
+    shouldRestoreScroll.current = false;
+    closeMenu();
   };
 
   const navLinks = [
@@ -38,8 +75,14 @@ export default function Header() {
 
   return (
     <header className="header">
+      {/* Backdrop Overlay for Mobile Menu */}
+      <div
+        className={`nav-overlay ${isMenuOpen ? "active" : ""}`}
+        onClick={closeMenu}
+      ></div>
+
       <div className="container header-container">
-        <Link href="/" className="logo" onClick={closeMenu}>
+        <Link href="/" className="logo" onClick={handleNavLinkClick}>
           {personal.name}
         </Link>
 
@@ -63,7 +106,7 @@ export default function Header() {
                 <Link
                   href={getLinkHref(link.href)}
                   className="nav-link"
-                  onClick={closeMenu}
+                  onClick={handleNavLinkClick}
                 >
                   {link.label}
                 </Link>
@@ -74,7 +117,7 @@ export default function Header() {
             <Link
               href={getLinkHref("#contact")}
               className="cta-button"
-              onClick={closeMenu}
+              onClick={handleNavLinkClick}
             >
               Get In Touch
             </Link>

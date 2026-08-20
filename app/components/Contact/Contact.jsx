@@ -12,6 +12,7 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [mailLink, setMailLink] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,9 +24,23 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulate contact submission
-    console.log("Contact request submitted:", formData);
+    
+    const recipient = personal.email || "sanskritivariya25@gmail.com";
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+
+    const generatedLink = `mailto:${recipient}?subject=${subject}&body=${body}`;
+    setMailLink(generatedLink);
+
+    // Create a temporary anchor element to trigger the mail client (more reliable)
+    const link = document.createElement("a");
+    link.href = generatedLink;
+    link.click();
+
     setIsSubmitted(true);
+    
     // Reset form after submission
     setFormData({
       name: "",
@@ -33,10 +48,12 @@ export default function Contact() {
       subject: "",
       message: "",
     });
-    // Reset submission confirmation alert after a few seconds
+    
+    // Reset submission confirmation alert after a longer period (10 seconds)
+    // so they have time to click the manual link if their browser blocked the auto-trigger
     setTimeout(() => {
       setIsSubmitted(false);
-    }, 5000);
+    }, 10000);
   };
 
   return (
@@ -80,7 +97,11 @@ export default function Contact() {
           <div className="contact-form-wrapper reveal reveal-right delay-2">
             {isSubmitted && (
               <div className="form-success-alert" role="alert">
-                Thank you! Your message has been sent successfully.
+                <p style={{ fontWeight: 600, marginBottom: "4px" }}>Thank you! Attempting to open your email client...</p>
+                <p style={{ fontSize: "0.85rem", opacity: 0.95 }}>
+                  If your email app didn't open, please
+                  <a href={mailLink}> click here to send the email manually</a>.
+                </p>
               </div>
             )}
             
