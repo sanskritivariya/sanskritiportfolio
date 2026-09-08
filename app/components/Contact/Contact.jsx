@@ -12,7 +12,7 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [mailLink, setMailLink] = useState("");
+  const [whatsappLink, setWhatsappLink] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,19 +25,29 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const recipient = personal.email || "sanskritivariya25@gmail.com";
-    const subject = encodeURIComponent(formData.subject);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
+    const phoneRaw = personal.phone || "+91 9106976221";
+    const cleanPhone = phoneRaw.replace(/\D/g, "");
 
-    const generatedLink = `mailto:${recipient}?subject=${subject}&body=${body}`;
-    setMailLink(generatedLink);
+    const defaultMsg = "I am interested in your profile";
+    const messageParts = [];
 
-    // Create a temporary anchor element to trigger the mail client (more reliable)
-    const link = document.createElement("a");
-    link.href = generatedLink;
-    link.click();
+    if (formData.name.trim()) messageParts.push(`Name: ${formData.name.trim()}`);
+    if (formData.email.trim()) messageParts.push(`Email: ${formData.email.trim()}`);
+    if (formData.subject.trim()) messageParts.push(`Subject: ${formData.subject.trim()}`);
+    
+    let textToSend = defaultMsg;
+    if (formData.message.trim()) {
+      textToSend = `${defaultMsg}\n\n${formData.message.trim()}`;
+    }
+    if (messageParts.length > 0) {
+      textToSend += `\n\nDetails:\n${messageParts.join("\n")}`;
+    }
+
+    const generatedLink = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(textToSend)}`;
+    setWhatsappLink(generatedLink);
+
+    // Open WhatsApp in a new tab
+    window.open(generatedLink, "_blank", "noopener,noreferrer");
 
     setIsSubmitted(true);
     
@@ -49,8 +59,6 @@ export default function Contact() {
       message: "",
     });
     
-    // Reset submission confirmation alert after a longer period (10 seconds)
-    // so they have time to click the manual link if their browser blocked the auto-trigger
     setTimeout(() => {
       setIsSubmitted(false);
     }, 10000);
@@ -97,10 +105,10 @@ export default function Contact() {
           <div className="contact-form-wrapper reveal reveal-right delay-2">
             {isSubmitted && (
               <div className="form-success-alert" role="alert">
-                <p style={{ fontWeight: 600, marginBottom: "4px" }}>Thank you! Attempting to open your email client...</p>
+                <p style={{ fontWeight: 600, marginBottom: "4px" }}>Opening WhatsApp...</p>
                 <p style={{ fontSize: "0.85rem", opacity: 0.95 }}>
-                  If your email app didn't open, please
-                  <a href={mailLink}> click here to send the email manually</a>.
+                  If WhatsApp didn't open automatically,
+                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer"> click here to send message on WhatsApp</a>.
                 </p>
               </div>
             )}
@@ -116,8 +124,7 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  required
-                  placeholder="Your Name"
+                  placeholder="Your Name (Optional)"
                   className="form-input"
                 />
               </div>
@@ -132,8 +139,7 @@ export default function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  required
-                  placeholder="name@example.com"
+                  placeholder="name@example.com (Optional)"
                   className="form-input"
                 />
               </div>
@@ -148,8 +154,7 @@ export default function Contact() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  required
-                  placeholder="How can I help you?"
+                  placeholder="How can I help you? (Optional)"
                   className="form-input"
                 />
               </div>
@@ -163,9 +168,8 @@ export default function Contact() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  required
                   rows="5"
-                  placeholder="Your message details..."
+                  placeholder="I am interested in your profile..."
                   className="form-textarea"
                 ></textarea>
               </div>
